@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Submit an Obituary | Obituary Platform{% endblock %}
+{% block meta_description %}Submit an obituary with name, dates, tribute content, and author details.{% endblock %}
+
+{% block content %}
+<section class="hero-band hero-split">
+    <div>
+        <p class="eyebrow">Memorial Submission</p>
+        <h1>Submit an Obituary</h1>
+        <p class="lead">Create a respectful obituary notice that can be viewed, shared, and indexed by search engines.</p>
+    </div>
+    <div class="hero-actions">
+        <a class="outline-button" href="{{ url_for('view_obituaries') }}">View Records</a>
+    </div>
+</section>
+
+<section class="form-layout">
+    <aside class="process-panel" aria-label="Submission details">
+        <p class="panel-number">01</p>
+        <h2>Record Details</h2>
+        <p>Enter the memorial information carefully. The system creates a public page, a unique slug, and search-ready metadata after submission.</p>
+        <dl class="mini-list">
+            <div>
+                <dt>Format</dt>
+                <dd>Public obituary record</dd>
+            </div>
+            <div>
+                <dt>Storage</dt>
+                <dd>SQLite database</dd>
+            </div>
+            <div>
+                <dt>Output</dt>
+                <dd>Detail page and listing</dd>
+            </div>
+        </dl>
+    </aside>
+
+    <form id="obituaryForm" class="obituary-form" method="POST" action="{{ url_for('submit_obituary') }}" novalidate>
+        <div class="form-section-title">
+            <span>Required fields</span>
+            <strong>Obituary Entry</strong>
+        </div>
+
+        <div class="two-column">
+            <div class="field-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" maxlength="100" value="{{ form.name or '' }}" required>
+                <small class="error-message" data-error-for="name"></small>
+            </div>
+
+            <div class="field-group">
+                <label for="author">Author</label>
+                <input type="text" id="author" name="author" maxlength="100" value="{{ form.author or '' }}" required>
+                <small class="error-message" data-error-for="author"></small>
+            </div>
+        </div>
+
+        <div class="two-column">
+            <div class="field-group">
+                <label for="date_of_birth">Date of Birth</label>
+                <input type="date" id="date_of_birth" name="date_of_birth" value="{{ form.date_of_birth or '' }}" required>
+                <small class="error-message" data-error-for="date_of_birth"></small>
+            </div>
+
+            <div class="field-group">
+                <label for="date_of_death">Date of Death</label>
+                <input type="date" id="date_of_death" name="date_of_death" value="{{ form.date_of_death or '' }}" required>
+                <small class="error-message" data-error-for="date_of_death"></small>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label for="content">Content</label>
+            <textarea id="content" name="content" rows="8" minlength="20" required>{{ form.content or '' }}</textarea>
+            <small class="error-message" data-error-for="content"></small>
+        </div>
+
+        <div class="form-footer">
+            <p>After saving, the obituary opens on its public detail page.</p>
+            <button type="submit" class="primary-button">Submit Obituary</button>
+        </div>
+    </form>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+{% endblock %}
