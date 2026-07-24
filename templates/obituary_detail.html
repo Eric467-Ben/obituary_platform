@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} | Obituary Platform{% endblock %}
+{% block meta_description %}{{ description }}{% endblock %}
+{% block meta_keywords %}{{ obituary.name }}, obituary, memorial, remembrance, funeral notice{% endblock %}
+
+{% block canonical %}
+<link rel="canonical" href="{{ canonical_url }}">
+{% endblock %}
+
+{% block social_meta %}
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{ title }}">
+<meta name="twitter:description" content="{{ description }}">
+<script type="application/ld+json">{{ schema_json | safe }}</script>
+{% endblock %}
+
+{% block content %}
+<section class="detail-layout">
+    <article class="obituary-article">
+        <header class="article-masthead">
+            <p class="eyebrow">In Loving Memory</p>
+            <h1>{{ obituary.name }}</h1>
+            <p class="dates">{{ obituary.date_of_birth }} - {{ obituary.date_of_death }}</p>
+        </header>
+
+        <div class="tribute-content">
+            <p>{{ obituary.content }}</p>
+        </div>
+
+        <footer class="article-footer">
+            <p>Submitted by {{ obituary.author }} on {{ obituary.submission_date }}</p>
+        </footer>
+    </article>
+
+    <aside class="share-panel" aria-label="Social sharing">
+        <p class="panel-number">Share</p>
+        <h2>Share this obituary</h2>
+        <p class="share-note">Use the public page link for family notices and social media previews.</p>
+        <div class="share-links">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ canonical_url | urlencode }}" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://twitter.com/intent/tweet?text={{ share_text }}" target="_blank" rel="noopener">X/Twitter</a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ canonical_url | urlencode }}" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://wa.me/?text={{ share_text }}" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+    </aside>
+</section>
+{% endblock %}
